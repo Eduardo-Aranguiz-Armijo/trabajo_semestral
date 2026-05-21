@@ -1,4 +1,0 @@
-spring.datasource.url=jdbc:mysql://localhost:3306/db_auth
-spring.datasource.username=tu_usuario_mysql
-spring.datasource.password=tu_contraseña_mysql
-jwt.secret=una_clave_secreta_larga_y_segura_de_al_menos_32_bytes
