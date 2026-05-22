@@ -8,7 +8,7 @@ El sistema está compuesto por múltiples servicios independientes que se comuni
 ---
 
 ## Tecnologías Utilizadas
-* **Lenguaje:** Java 17
+* **Lenguaje:** Java 
 * **Framework Principal:** Spring Boot
 * **Seguridad:** Spring Security + JWT
 * **Persistencia:** Spring Data JPA / MySQL
@@ -106,7 +106,7 @@ Comprobante       8090
 
 Ejecución en IntelliJ IDEA
 1. Requisitos Previos
-Asegurarse de tener instalado Java 17 configurado en el SDK del IDE.
+Asegurarse de tener instalado Java  configurado en el SDK del IDE.
 
 Tener corriendo el servidor de MySQL local con las bases de datos correspondientes para cada microservicio.
 
