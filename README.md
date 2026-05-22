@@ -148,7 +148,7 @@ Objetivo del Proyecto
 El objetivo principal de este proyecto es aplicar patrones avanzados de arquitectura de software
 para elbackend empresarial,resolviendoproblemas de escalabilidad y desacoplamiento mediante microservicios.
 
-Integrantes 👥
+Integrantes 
 Eduardo Aranguiz
 Jerson Pedreros
 Edward Cardoza
