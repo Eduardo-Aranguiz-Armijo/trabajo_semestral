@@ -150,5 +150,5 @@ para elbackend empresarial,resolviendoproblemas de escalabilidad y desacoplamien
 
 Integrantes 👥
 Eduardo Aranguiz
-Jerzon  ------- (No me acuerdo del nombre)
+Jerson Pedreros
 Edward Cardoza
