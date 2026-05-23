@@ -177,7 +177,21 @@ JWT                              Mecanismo de seguridad para la autenticación y
 API Gateway                      Centralización del acceso y enrutamiento de las peticiones a los microservicios internos.
 ```
 
-
+¿Cómo participan los 11 servicios en los 6 pasos?
+```
+Microservicio      ¿Cuándo actúa?        Función en el ejemplo anterior
+Gateway            En todos los pasos    Es el que recibe todas tus peticiones en el puerto 5995.
+Auth Service       Pasos 1 y 2           Crea tu usuario y te da el token.
+Customer Service   Paso 1                El auth-service lo llama internamente para guardar tus datos personales (RUT, dirección).
+Product Service    Paso 3                El cart-service lo llama para verificar que el producto que quieres existe y ver su precio.
+Inventory Service  Pasos 3, 4 y 6        Verifica si hay stock antes de añadir al carrito y descuenta el stock al pagar.
+Cart Service       Paso 3                Guarda tus productos temporalmente.
+Order Service      Paso 4                Transforma tu carrito en una orden formal.
+Payment Service    Pasos 5 y 6           Registra tu tarjeta y procesa el cobro final.
+Notificaciones     Paso 6                Se activa automáticamente al terminar el pago para "enviar" el aviso de éxito.
+Comprobante        Paso 6                Se activa automáticamente al terminar el pago para generar tu recibo digital.
+Catalog Service    Consulta previa        Se usa para listar las categorías (ej. "Hombre", "Mujer") antes de buscar productos.
+```
 
 Ejecución en IntelliJ IDEA
 
