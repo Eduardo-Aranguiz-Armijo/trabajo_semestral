@@ -130,7 +130,7 @@ Notificaciones y Comprobantes
 • Generación de comprobantes digitales para cada transacción.
 
 Estructura del Proyecto
-
+```
 Plain Text
 
 
@@ -146,11 +146,11 @@ trabajo_semestral
 ├── order-service
 ├── payment-service
 └── product-service
-
+```
 
 
 Configuración de Puertos
-
+```
 Servicio            Puerto
 Gateway              5995
 Auth Service         8081
@@ -163,7 +163,7 @@ Notificaciones       8087
 Order Service        8088
 Payment Service      8089
 Product Service      8090
-
+```
 
 
 
