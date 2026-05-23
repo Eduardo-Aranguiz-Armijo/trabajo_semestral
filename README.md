@@ -43,28 +43,40 @@ payment-service              Procesamiento de pagos, orquestando la actualizaci�
 product-service              Gestión completa del catálogo de productos (CRUD).
 
                   Cliente
-                     ↓
+                     |
+                     v
                Gateway (5995)
-                     ↓
-       ┌─────────────┴─────────────┐
-       ▼                           ▼
-Auth Service (8081) → JWT   Product Service (8090)
-                                   ↓
-                           Catalog Service (8083)
-                                   ↓
-                            Cart Service (8082)
-                                   ↓
-                         Customer Service (8085)
-                                   ↓
-                           Order Service (8088)
-                                   ↓
-                          Payment Service (8089)
-                                   ↓
-                         Inventory Service (8086)
-                                   ↓
-                          Notificaciones (8087)
-                                   ↓
-                           Comprobante (8084)
+                     |
+        +------------+------------+
+        |                         |
+        v                         v
+ Auth Service (8081)       Product Service (8090)
+        |                         |
+        | JWT                     v
+        |                  Catalog Service (8083)
+        |                         |
+        |                         v
+        |                  Cart Service (8082)
+        |                         |
+        |                         v
+        |                 Customer Service (8085)
+        |                         |
+        |                         v
+        |                  Order Service (8088)
+        |                         |
+        |                         v
+        |                 Payment Service (8089)
+        |                         |
+        |                         v
+        |                Inventory Service (8086)
+        |                         |
+        |                         v
+        |                 Notificaciones (8087)
+        |                         |
+        |                         v
+        |                  Comprobante (8084)
+
+                           
 Explicación del Flujo
 
 Servicio            Puerto         Función en el flujo
