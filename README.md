@@ -280,8 +280,8 @@ Integrantes:
 - Edward Cardoza
 
 
-
-```Guia de uso de postman
+Guia de uso de postman
+```
 1. Registro de Usuario y Cliente
 Primero, creamos una cuenta. Este endpoint es especial porque registra al usuario en el sistema de autenticación y crea su perfil de cliente simultáneamente.
 URL: POST http://localhost:5995/api/v1/auth/register
