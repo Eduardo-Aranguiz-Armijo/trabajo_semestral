@@ -279,3 +279,72 @@ Integrantes:
 - Jerson Pedreros
 - Edward Cardoza
 
+
+Guia de uso de postman
+```
+1. Registro de Usuario y Cliente
+Primero, creamos una cuenta. Este endpoint es especial porque registra al usuario en el sistema de autenticación y crea su perfil de cliente simultáneamente.
+URL: POST http://localhost:5995/api/v1/auth/register
+Body (JSON ):
+JSON
+{
+  "username": "juan_perez",
+  "password": "password123",
+  "role": "USER",
+  "nombre": "Juan Pérez",
+  "rut": "12.345.678-9",
+  "correo": "juan@example.com",
+  "direccion": "Calle Falsa 123",
+  "telefono": "+56912345678"
+}
+2. Inicio de Sesión (Obtener Token)
+Para realizar cualquier otra acción, necesitas el token JWT.
+URL: POST http://localhost:5995/api/v1/auth/login
+Body (JSON ):
+JSON
+{
+  "username": "juan_perez",
+  "password": "password123"
+}
+Resultado: Copia el valor del campo "token" de la respuesta. En las siguientes peticiones, ve a la pestaña Authorization, selecciona Bearer Token y pega este código.
+3. Gestionar el Carrito
+Una vez autenticado, puedes añadir productos. (Asegúrate de que existan productos con ID 1 en tu base de datos).
+URL: POST http://localhost:5995/api/v1/cart/items
+Headers: Authorization: Bearer <tu_token>
+Body (JSON ):
+JSON
+{
+  "productId": 1,
+  "cantidad": 2
+}
+4. Crear la Orden
+Cuando estés listo para comprar, conviertes el carrito en una orden. Este endpoint no requiere un cuerpo JSON porque el sistema ya sabe quién eres por tu token.
+URL: POST http://localhost:5995/api/v1/orders
+Headers: Authorization: Bearer <tu_token>
+Body: (Vacío )
+Resultado: Copia el "id" de la orden creada (ej. 1).
+5. Registrar Método de Pago
+Antes de pagar, debes registrar una tarjeta asociada a tu cuenta.
+URL: POST http://localhost:5995/api/v1/payment-methods
+Headers: Authorization: Bearer <tu_token>
+Body (JSON ):
+JSON
+{
+  "cardHolder": "Juan Pérez",
+  "cardNumber": "1234567812345678",
+  "expirationDate": "12/28",
+  "cvv": "123"
+}
+Resultado: Copia el "id" del método de pago (ej. 1).
+6. Procesar el Pago (Finalizar Compra)
+Este es el paso final que dispara todo el flujo: valida el stock, cambia la orden a pagada, envía la notificación y genera el comprobante.
+URL: POST http://localhost:5995/api/v1/payments
+Headers: Authorization: Bearer <tu_token>
+Body (JSON ):
+JSON
+{
+  "orderId": 1,
+  "paymentMethodId": 1
+}
+
+```
