@@ -26,7 +26,6 @@ Boilerplate                  Lombok
 
 
 Arquitectura del Proyecto
-
 El sistema está dividido en los siguientes módulos y microservicios independientes:
 ```
 Componente / Servicio      Función
@@ -42,7 +41,7 @@ order-service                Administración y procesamiento de órdenes, transf
 payment-service              Procesamiento de pagos, orquestando la actualización de la orden, notificación y comprobante.
 product-service              Gestión completa del catálogo de productos (CRUD).
 ```
-
+Flujo General del Sistema
 ```
                   Cliente
                      ↓
@@ -168,22 +167,15 @@ Product Service      8090
 
 
 Comunicación Entre Microservicios
-
 El proyecto utiliza:
-
-Tecnología
-Función
-REST APIs
-Comunicación HTTP estándar entre servicios.
-WebClient
-Cliente HTTP reactivo para el consumo de APIs entre microservicios.
-DTOs (Data Transfer Objects)
-Objetos para la transferencia de datos entre servicios, asegurando la consistencia.
-JWT
-Mecanismo de seguridad para la autenticación y autorización de las peticiones.
-API Gateway
-Centralización del acceso y enrutamiento de las peticiones a los microservicios internos.
-
+```
+Tecnología                      Función
+REST APIs                        Comunicación HTTP estándar entre servicios.
+WebClient                        Cliente HTTP reactivo para el consumo de APIs entre microservicios.
+DTOs (Data Transfer Objects)     Objetos para la transferencia de datos entre servicios, asegurando la consistencia.
+JWT                              Mecanismo de seguridad para la autenticación y autorización de las peticiones.
+API Gateway                      Centralización del acceso y enrutamiento de las peticiones a los microservicios internos.
+```
 
 
 
