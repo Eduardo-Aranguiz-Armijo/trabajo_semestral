@@ -7,7 +7,7 @@ E-Commerce Shop es una plataforma de comercio electrónico desarrollada bajo una
 El sistema está compuesto por múltiples servicios independientes que se comunican entre sí mediante APIs REST, permitiendo administrar de forma separada la autenticación, productos, inventario, pagos, órdenes, clientes y notificaciones del sistema.
 
 La arquitectura implementa separación de responsabilidades, seguridad centralizada mediante JWT y comunicación desacoplada entre servicios utilizando WebClient y API Gateway.
-
+```
 Tecnologías Utilizadas
 
 Tecnología                  Uso
@@ -22,13 +22,13 @@ Arquitectura                 Microservicios
 Migraciones DB               Flyway
 Boilerplate                  Lombok
 
-
+```
 
 
 Arquitectura del Proyecto
 
 El sistema está dividido en los siguientes módulos y microservicios independientes:
-
+```
 Componente / Servicio      Función
 gateway                      Punto de entrada único y enrutamiento inteligente para todas las peticiones externas.
 auth-service                 Gestión de usuarios, registro, login y generación de tokens JWT para autenticación y autorización.
@@ -41,6 +41,7 @@ notificaciones               Envío de notificaciones a los clientes (ej. confir
 order-service                Administración y procesamiento de órdenes, transformando un carrito en una orden pendiente.
 payment-service              Procesamiento de pagos, orquestando la actualización de la orden, notificación y comprobante.
 product-service              Gestión completa del catálogo de productos (CRUD).
+```
 
 ```
                   Cliente
@@ -67,7 +68,7 @@ Auth Service (8081) → JWT   Product Service (8090)
                                    ↓
                            Comprobante (8084)
 ```
-                           
+```                         
 Explicación del Flujo
 
 Servicio            Puerto         Función en el flujo
@@ -83,7 +84,7 @@ Inventory Service    8086           Actualiza el stock de productos en tiempo re
 Notificaciones       8087           Envía correos electrónicos y otras alertas a los clientes sobre el estado de sus pedidos.
 Comprobante          8084           Genera y almacena los comprobantes de las transacciones realizadas.
 
-
+```
 
 
 Características Principales
