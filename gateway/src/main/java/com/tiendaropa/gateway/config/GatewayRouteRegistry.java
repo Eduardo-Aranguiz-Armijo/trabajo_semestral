@@ -8,7 +8,7 @@ import java.util.List;
 @Component
 public class GatewayRouteRegistry {
 
-    public List<RouteInfoDTO> getRegisteredRoutes() {
+public List<RouteInfoDTO> getRegisteredRoutes() {
         return List.of(
                 // 1. Auth
                 route("ms-users", "http://localhost:8081", "/api/v1/auth/**"),
