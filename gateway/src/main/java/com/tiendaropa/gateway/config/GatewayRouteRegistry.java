@@ -35,8 +35,7 @@ public List<RouteInfoDTO> getRegisteredRoutes() {
                 route("orden", "http://localhost:8088", "/api/v1/orders/**"),
                 
                 // 9. Pagos
-                route("payment", "http://localhost:8089", "/api/v1/payment/**"),
-                route("payment-methods", "http://localhost:8089", "/api/v1/payment-methods/**"),
+                route("payment", "http://localhost:8089", "/api/v1/payment/**, /api/v1/payment-methods/**"),
                 
                 // 10. Productos
                 route("productos", "http://localhost:8090", "/api/v1/productos/**")
