@@ -1,0 +1,16 @@
+package com.example.CustomerClient.repository;
+
+import com.example.CustomerClient.model.Client;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface ClientRepository extends JpaRepository<Client,Long> {
+     Optional<Client> findByUserId(Long userId);
+     Optional<Client> findByEmail(String email);
+
+     Optional<Client> findByRut(String rut);
+
+     Optional<Client> findByPhone(String phone);
+
+}

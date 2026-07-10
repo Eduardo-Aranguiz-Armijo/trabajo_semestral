@@ -1,0 +1,247 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ecommerce-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - ecommerce-net
+
+  eureka-server:
+    build:
+      context: ./eureka-server/eureka-server
+    image: ecommerce/eureka-server:latest
+    container_name: ecommerce-eureka-server
+    restart: unless-stopped
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8761/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    networks:
+      - ecommerce-net
+
+  auth-service:
+    build:
+      context: ./auth-service
+    image: ecommerce/auth-service:latest
+    container_name: ecommerce-auth-service
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      PORT: 8081
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    expose:
+      - "8081"
+    networks:
+      - ecommerce-net
+
+  customer-service:
+    build:
+      context: ./customer-service
+    image: ecommerce/customer-service:latest
+    container_name: ecommerce-customer-service
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      PORT: 8082
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    expose:
+      - "8082"
+    networks:
+      - ecommerce-net
+
+  inventory-service:
+    build:
+      context: ./inventory-service
+    image: ecommerce/inventory-service:latest
+    container_name: ecommerce-inventory-service
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      PORT: 8083
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    expose:
+      - "8083"
+    networks:
+      - ecommerce-net
+
+  catalog-service:
+    build:
+      context: ./catalog-service
+    image: ecommerce/catalog-service:latest
+    container_name: ecommerce-catalog-service
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      PORT: 8084
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    expose:
+      - "8084"
+    networks:
+      - ecommerce-net
+
+  product-service:
+    build:
+      context: ./product-service
+    image: ecommerce/product-service:latest
+    container_name: ecommerce-product-service
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      PORT: 8085
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      inventory-service:
+        condition: service_started
+      catalog-service:
+        condition: service_started
+    expose:
+      - "8085"
+    networks:
+      - ecommerce-net
+
+  cart-service:
+    build:
+      context: ./cart-service
+    image: ecommerce/cart-service:latest
+    container_name: ecommerce-cart-service
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      PORT: 8086
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      product-service:
+        condition: service_started
+      customer-service:
+        condition: service_started
+      inventory-service:
+        condition: service_started
+    expose:
+      - "8086"
+    networks:
+      - ecommerce-net
+
+  orden-service:
+    build:
+      context: ./orden-service
+    image: ecommerce/orden-service:latest
+    container_name: ecommerce-orden-service
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      PORT: 8087
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      cart-service:
+        condition: service_started
+      product-service:
+        condition: service_started
+      customer-service:
+        condition: service_started
+      inventory-service:
+        condition: service_started
+    expose:
+      - "8087"
+    networks:
+      - ecommerce-net
+
+  payment-service:
+    build:
+      context: ./payment-service/payment
+    image: ecommerce/payment-service:latest
+    container_name: ecommerce-payment-service
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      PORT: 8088
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+      orden-service:
+        condition: service_started
+      customer-service:
+        condition: service_started
+    expose:
+      - "8088"
+    networks:
+      - ecommerce-net
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    image: ecommerce/api-gateway:latest
+    container_name: ecommerce-api-gateway
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+      auth-service:
+        condition: service_started
+      customer-service:
+        condition: service_started
+      inventory-service:
+        condition: service_started
+      catalog-service:
+        condition: service_started
+      product-service:
+        condition: service_started
+      cart-service:
+        condition: service_started
+      orden-service:
+        condition: service_started
+      payment-service:
+        condition: service_started
+    ports:
+      - "9090:9090"
+    networks:
+      - ecommerce-net
+
+networks:
+  ecommerce-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
