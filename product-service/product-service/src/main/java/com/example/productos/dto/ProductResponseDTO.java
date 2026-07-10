@@ -1,0 +1,25 @@
+package com.example.productos.dto;
+
+import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Data
+@Schema(description = "Datos de respuesta de un producto")
+public class ProductResponseDTO extends RepresentationModel<ProductResponseDTO> {
+    @Schema(description = "ID del producto", example = "1")
+    private Long id;
+    
+    @Schema(description = "Nombre del producto", example = "Laptop Pro")
+    private String name;
+    
+    @Schema(description = "Descripción del producto", example = "Laptop de 16GB RAM y 512GB SSD")
+    private String description;
+    
+    @Schema(description = "Precio del producto", example = "999.99")
+    private Double price;
+    
+    @Schema(description = "ID de la categoría a la que pertenece", example = "1")
+    private Long categoryId;
+}
